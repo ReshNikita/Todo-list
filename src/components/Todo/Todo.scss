@@ -1,0 +1,27 @@
+.Todo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  &__input {
+    outline: none;
+    width: 100%;
+    padding: 15px;
+    margin-right: 25px;
+    font-size: 20px;
+    color: #ccc;
+    background-color: #000000;
+    border: 1px solid #c89666;
+    border-radius: 10px;
+  }
+  &__button {
+    width: 70px;
+    padding: 15px;
+    font-size: 20px;
+    border-radius: 10px;
+    border: 0;
+    background-color: #f1af71;
+    cursor: pointer;
+  }
+}
