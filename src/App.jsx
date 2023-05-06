@@ -8,7 +8,7 @@ import "./App.scss";
 
 const App = () => {
   const initialState = JSON.parse(localStorage.getItem("todo")) || [];
-  //const [input, setInput] = useState("");
+  const [input, setInput] = useState("");
   const [todos, setTodos] = useState(initialState);
   const [editTodo, setEditTodo] = useState(null);
 
@@ -25,8 +25,8 @@ const App = () => {
         <Todo
           todos={todos}
           setTodos={setTodos}
-          // input={input}
-          // setInput={setInput}
+          input={input}
+          setInput={setInput}
           editTodo={editTodo}
           setEditTodo={setEditTodo}
         />

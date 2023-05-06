@@ -1,8 +1,6 @@
 import { ADD_TODO } from "../constants";
 
-export const addTask = (id, todo, isCompleted) => ({
+export const addTask = (todo) => ({
   type: ADD_TODO,
-  id,
-  todo,
-  isCompleted,
+  payload: todo,
 });

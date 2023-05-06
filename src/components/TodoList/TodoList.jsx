@@ -8,10 +8,15 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import "./TodoList.scss";
+import { useDispatch } from "react-redux";
+import { removeTask } from "../../redux/actions/removeTask";
 
 const TodoList = ({ todos, setTodos, setEditTodo }) => {
+  const dispatch = useDispatch();
+
   const handleDelete = ({ id }) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
+    dispatch(removeTask(id));
+    //setTodos(todos.filter((todo) => todo.id !== id));
   };
 
   const handleComplete = (todo) => {
