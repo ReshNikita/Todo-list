@@ -1,15 +1,14 @@
 import React, { useEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { useDispatch } from "react-redux";
+
 import { addTask } from "../../redux/actions/addTask";
-import { useDispatch, useSelector } from "react-redux";
 
 import "./Todo.scss";
 
-const Todo = ({ input, setInput, todos, setTodos, editTodo, setEditTodo }) => {
+const Todo = ({ input, setInput, todos, editTodo, setEditTodo }) => {
   const inputRef = useRef();
   const dispatch = useDispatch();
-
-  const tasks = useSelector((store) => store.todos);
 
   useEffect(() => {
     inputRef.current.focus();
@@ -24,18 +23,15 @@ const Todo = ({ input, setInput, todos, setTodos, editTodo, setEditTodo }) => {
   }, [setInput, editTodo]);
 
   const updateTodo = (title, id, completed) => {
-    const newTodo = todos.map((todo) =>
-      todo.id === id ? { title, id, completed } : todo
-    );
-    setTodos(newTodo);
+    todos.map((todo) => (todo.id === id ? { title, id, completed } : todo));
+
     setEditTodo("");
   };
 
   const onFormSubmit = (e) => {
     e.preventDefault();
-    dispatch(addTask(tasks));
+    dispatch(addTask({ title: input, id: uuidv4() }));
     if (!editTodo) {
-      setTodos([...todos, { id: uuidv4(), title: input, completed: false }]);
       setInput("");
     } else {
       updateTodo(input, editTodo.id, editTodo.completed);

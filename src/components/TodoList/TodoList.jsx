@@ -1,4 +1,5 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -7,24 +8,20 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 
-import "./TodoList.scss";
-import { useDispatch } from "react-redux";
 import { removeTask } from "../../redux/actions/removeTask";
+import { completeTodo } from "../../redux/actions/completeTodo";
 
-const TodoList = ({ todos, setTodos, setEditTodo }) => {
+import "./TodoList.scss";
+
+const TodoList = ({ todos, setEditTodo }) => {
   const dispatch = useDispatch();
 
   const handleDelete = ({ id }) => {
     dispatch(removeTask(id));
-    //setTodos(todos.filter((todo) => todo.id !== id));
   };
 
   const handleComplete = (todo) => {
-    setTodos(
-      todos.map((item) =>
-        item.id === todo.id ? { ...item, completed: !item.completed } : item
-      )
-    );
+    dispatch(completeTodo(todo));
   };
 
   const handleEdit = ({ id }) => {

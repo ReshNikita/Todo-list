@@ -1,6 +1,6 @@
 import { REMOVE_TODO } from "../constants";
 
-export const removeTask = (todo) => ({
+export const removeTask = (id) => ({
   type: REMOVE_TODO,
-  payload: todo.id,
+  payload: id,
 });

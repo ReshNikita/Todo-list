@@ -1,20 +1,36 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import Header from "./components/Header/Header";
 import Todo from "./components/Todo/Todo";
 import TodoList from "./components/TodoList/TodoList";
+import { addArray } from "./redux/actions/addArray";
 
 import "./App.scss";
 
 const App = () => {
   const initialState = JSON.parse(localStorage.getItem("todo")) || [];
+
   const [input, setInput] = useState("");
-  const [todos, setTodos] = useState(initialState);
   const [editTodo, setEditTodo] = useState(null);
 
+  const dispatch = useDispatch();
+
+  const todos = useSelector((store) => store.todos.todos);
+
   useEffect(() => {
-    localStorage.setItem("todo", JSON.stringify(todos));
-  }, [todos]);
+    return () => {
+      localStorage.setItem("todo", JSON.stringify(todos));
+    };
+  }, []);
+  // problem is here, problem in me
+  // как иметь обновленное значение стэйта в функции willUnmount useEffect
+
+  useEffect(() => {
+    if (initialState) {
+      dispatch(addArray(initialState));
+    }
+  }, []);
 
   return (
     <div className="container">
@@ -24,13 +40,12 @@ const App = () => {
         </header>
         <Todo
           todos={todos}
-          setTodos={setTodos}
           input={input}
           setInput={setInput}
           editTodo={editTodo}
           setEditTodo={setEditTodo}
         />
-        <TodoList todos={todos} setTodos={setTodos} setEditTodo={setEditTodo} />
+        <TodoList todos={todos} setEditTodo={setEditTodo} />
       </div>
     </div>
   );
