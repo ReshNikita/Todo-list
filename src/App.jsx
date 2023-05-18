@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-//import { useSelector, useDispatch } from "react-redux";
 
 import Header from "./components/Header/Header";
 import Todo from "./components/Todo/Todo";
@@ -8,10 +7,6 @@ import TodoList from "./components/TodoList/TodoList";
 import "./App.scss";
 
 const App = () => {
-  //const dispatch = useDispatch();
-  //const todos1 = useSelector((store) => store.tasks);
-  //console.log(todos1);
-
   const initialState = JSON.parse(localStorage.getItem("todo")) || [];
   const [input, setInput] = useState("");
   const [todos, setTodos] = useState(initialState);
