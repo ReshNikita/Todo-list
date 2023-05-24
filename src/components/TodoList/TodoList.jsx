@@ -8,8 +8,7 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 
-import { removeTask } from "../../redux/actions/removeTask";
-import { completeTodo } from "../../redux/actions/completeTodo";
+import { completeTodo, removeTodo, editTodo } from "../../redux/todosSlice";
 
 import "./TodoList.scss";
 
@@ -17,16 +16,22 @@ const TodoList = ({ todos, setEditTodo }) => {
   const dispatch = useDispatch();
 
   const handleDelete = ({ id }) => {
-    dispatch(removeTask(id));
+    dispatch(removeTodo(id));
   };
 
   const handleComplete = (todo) => {
     dispatch(completeTodo(todo));
   };
 
+  // const updateTodo = (title, id, completed) => {
+  //   todos.map((todo) => (todo.id === id ? { title, id, completed } : todo));
+
+  //   setEditTodo("");
+  // };
+
   const handleEdit = ({ id }) => {
     const foundTodo = todos.find((todo) => todo.id === id);
-    setEditTodo(foundTodo);
+    dispatch(editTodo(foundTodo));
   };
 
   return (
@@ -41,7 +46,10 @@ const TodoList = ({ todos, setEditTodo }) => {
             className={`todo-list__input ${
               todo.completed ? "todo-list__complete" : ""
             }`}
-            onChange={(e) => e.preventDefault()}
+            onChange={(e) => {
+              e.preventDefault();
+              setEditTodo(e.target.value);
+            }}
             onClick={() => handleEdit(todo)}
           />
           <div className="todo-list__buttons">

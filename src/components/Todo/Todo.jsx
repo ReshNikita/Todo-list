@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useDispatch } from "react-redux";
 
-import { addTask } from "../../redux/actions/addTask";
+import { addTodo } from "../../redux/todosSlice";
 
 import "./Todo.scss";
 
@@ -30,7 +30,7 @@ const Todo = ({ input, setInput, todos, editTodo, setEditTodo }) => {
 
   const onFormSubmit = (e) => {
     e.preventDefault();
-    dispatch(addTask({ title: input, id: uuidv4() }));
+    dispatch(addTodo({ title: input, id: uuidv4() }));
     if (!editTodo) {
       setInput("");
     } else {

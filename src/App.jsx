@@ -1,10 +1,10 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Header from "./components/Header/Header";
 import Todo from "./components/Todo/Todo";
 import TodoList from "./components/TodoList/TodoList";
-import { addArray } from "./redux/actions/addArray";
+import { addArray } from "./redux/todosSlice";
 
 import "./App.scss";
 
@@ -23,8 +23,8 @@ const App = () => {
       localStorage.setItem("todo", JSON.stringify(todos));
     };
   }, []);
-  // problem is here, problem in me
-  // как иметь обновленное значение стэйта в функции willUnmount useEffect
+
+  //как иметь обновленное значение стэйта в функции willUnmount useEffect
 
   useEffect(() => {
     if (initialState) {
