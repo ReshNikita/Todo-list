@@ -30,7 +30,7 @@ const Todo = ({ input, setInput, todos, editTodo, setEditTodo }) => {
 
   const onFormSubmit = (e) => {
     e.preventDefault();
-    dispatch(addTask({ title: input, id: uuidv4() }));
+    dispatch(addTask({ title: input, id: uuidv4(), completed: false }));
     if (!editTodo) {
       setInput("");
     } else {

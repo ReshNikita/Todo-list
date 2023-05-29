@@ -1,7 +1,12 @@
-import { ADD_ARRAY, ADD_TODO, REMOVE_TODO, COMPLETE_TODO } from "../constants";
+import {
+  ADD_TODO,
+  REMOVE_TODO,
+  COMPLETE_TODO,
+  UPDATE_TASK,
+} from "../constants";
 
 const initialState = {
-  todos: [],
+  todos: JSON.parse(localStorage.getItem("todos")) || [],
 };
 
 export const todos = (state = initialState, { type, payload }) => {
@@ -13,15 +18,18 @@ export const todos = (state = initialState, { type, payload }) => {
         ...state,
         todos: state.todos.filter((i) => i.id !== payload),
       };
-    case ADD_ARRAY:
-      return { ...state, todos: [...state.todos].concat(payload) };
+    case UPDATE_TASK:
+      return { ...state, todos: payload };
     case COMPLETE_TODO:
       return {
         ...state,
-        todos: state.todos.map((i) =>
-          i.id === payload.id ? { ...i, completed: !i.completed } : i
+        todos: state.todos.map((item) =>
+          item.id === payload.id
+            ? { ...item, completed: !item.completed }
+            : item
         ),
       };
+
     default:
       return state;
   }

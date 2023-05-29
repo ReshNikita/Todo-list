@@ -20,8 +20,8 @@ const TodoList = ({ todos, setEditTodo }) => {
     dispatch(removeTask(id));
   };
 
-  const handleComplete = (todo) => {
-    dispatch(completeTodo(todo));
+  const handleComplete = (id) => {
+    dispatch(completeTodo(id));
   };
 
   const handleEdit = ({ id }) => {
@@ -42,7 +42,6 @@ const TodoList = ({ todos, setEditTodo }) => {
               todo.completed ? "todo-list__complete" : ""
             }`}
             onChange={(e) => e.preventDefault()}
-            onClick={() => handleEdit(todo)}
           />
           <div className="todo-list__buttons">
             <button
