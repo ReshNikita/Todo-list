@@ -1,34 +1,52 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Header from "./components/Header/Header";
-import Todo from "./components/Todo/Todo";
-import TodoList from "./components/TodoList/TodoList";
+import Form from "./components/Form";
+import Todos from "./components/Todos";
 
-import "./App.scss";
+import { deleteAll } from "./redux/actions/deleteAll";
 
 const App = () => {
-  const [input, setInput] = useState("");
-  const [editTodo, setEditTodo] = useState(null);
+  const dispatch = useDispatch();
 
-  const todos = useSelector((store) => store.todos.todos);
+  const todos = useSelector((state) => state.todos.todos);
   localStorage.setItem("todos", JSON.stringify(todos));
+
+  const [editFormVisibility, setEditFormVisibility] = useState(false);
+  const [editTodo, setEditTodo] = useState("");
+
+  const handleEditClick = (todo) => {
+    setEditFormVisibility(true);
+    setEditTodo(todo);
+  };
+
+  const cancelUpdate = () => {
+    setEditFormVisibility(false);
+  };
 
   return (
     <div className="container">
-      <div className="container__wrapper">
-        <header>
-          <Header />
-        </header>
-        <Todo
-          todos={todos}
-          input={input}
-          setInput={setInput}
-          editTodo={editTodo}
-          setEditTodo={setEditTodo}
-        />
-        <TodoList todos={todos} setEditTodo={setEditTodo} />
-      </div>
+      <header>
+        <Header />
+      </header>
+      <Form
+        editFormVisibility={editFormVisibility}
+        editTodo={editTodo}
+        cancelUpdate={cancelUpdate}
+      />
+      <Todos
+        handleEditClick={handleEditClick}
+        editFormVisibility={editFormVisibility}
+      />
+      {todos.length > 1 && (
+        <button
+          className="container__button delete-all"
+          onClick={() => dispatch(deleteAll())}
+        >
+          DELETE ALL
+        </button>
+      )}
     </div>
   );
 };
