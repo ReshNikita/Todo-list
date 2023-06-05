@@ -1,52 +1,52 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Header from "./components/Header/Header";
-import Todo from "./components/Todo/Todo";
-import TodoList from "./components/TodoList/TodoList";
-import { addArray } from "./redux/todosSlice";
+import Form from "./components/Form";
+import Todos from "./components/Todos";
 
-import "./App.scss";
+import { deleteAll } from "./redux/todosSlice";
 
 const App = () => {
-  const initialState = JSON.parse(localStorage.getItem("todo")) || [];
-
-  const [input, setInput] = useState("");
-  const [editTodo, setEditTodo] = useState(null);
-
   const dispatch = useDispatch();
 
-  const todos = useSelector((store) => store.todos.todos);
+  const todos = useSelector((state) => state.todos.todos);
+  localStorage.setItem("todos", JSON.stringify(todos));
 
-  useEffect(() => {
-    return () => {
-      localStorage.setItem("todo", JSON.stringify(todos));
-    };
-  }, []);
+  const [editFormVisibility, setEditFormVisibility] = useState(false);
+  const [editTodo, setEditTodo] = useState("");
 
-  //как иметь обновленное значение стэйта в функции willUnmount useEffect
+  const handleEditClick = (todo) => {
+    setEditFormVisibility(true);
+    setEditTodo(todo);
+  };
 
-  useEffect(() => {
-    if (initialState) {
-      dispatch(addArray(initialState));
-    }
-  }, []);
+  const cancelUpdate = () => {
+    setEditFormVisibility(false);
+  };
 
   return (
     <div className="container">
-      <div className="container__wrapper">
-        <header>
-          <Header />
-        </header>
-        <Todo
-          todos={todos}
-          input={input}
-          setInput={setInput}
-          editTodo={editTodo}
-          setEditTodo={setEditTodo}
-        />
-        <TodoList todos={todos} setEditTodo={setEditTodo} />
-      </div>
+      <header>
+        <Header />
+      </header>
+      <Form
+        editFormVisibility={editFormVisibility}
+        editTodo={editTodo}
+        cancelUpdate={cancelUpdate}
+      />
+      <Todos
+        handleEditClick={handleEditClick}
+        editFormVisibility={editFormVisibility}
+      />
+      {todos.length > 1 && (
+        <button
+          className="container__button delete-all"
+          onClick={() => dispatch(deleteAll())}
+        >
+          DELETE ALL
+        </button>
+      )}
     </div>
   );
 };
