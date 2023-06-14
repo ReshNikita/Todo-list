@@ -1,54 +1,34 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  RouterProvider,
+} from "react-router-dom";
 
-import Header from "./components/Header/Header";
-import Form from "./components/Form";
-import Todos from "./components/Todos";
+import ErrorPage from "./components/ErrorPage";
+import Login from "./components/Login/Login";
+import Registration from "./components/Registration/Registration";
+import PrivateRoute from "./components/PrivateRoute";
+import TodoLayout from "./components/TodoLayout";
 
-import { deleteAll } from "./redux/todosSlice";
-
-const App = () => {
-  const dispatch = useDispatch();
-
-  const todos = useSelector((state) => state.todos.todos);
-  localStorage.setItem("todos", JSON.stringify(todos));
-
-  const [editFormVisibility, setEditFormVisibility] = useState(false);
-  const [editTodo, setEditTodo] = useState("");
-
-  const handleEditClick = (todo) => {
-    setEditFormVisibility(true);
-    setEditTodo(todo);
-  };
-
-  const cancelUpdate = () => {
-    setEditFormVisibility(false);
-  };
-
-  return (
-    <div className="container">
-      <header>
-        <Header />
-      </header>
-      <Form
-        editFormVisibility={editFormVisibility}
-        editTodo={editTodo}
-        cancelUpdate={cancelUpdate}
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route>
+      <Route index element={<Login />} />
+      <Route path="register" element={<Registration />} />
+      <Route path="*" element={<ErrorPage />} />
+      <Route
+        path="/todo"
+        element={
+          <PrivateRoute>
+            <TodoLayout />
+          </PrivateRoute>
+        }
       />
-      <Todos
-        handleEditClick={handleEditClick}
-        editFormVisibility={editFormVisibility}
-      />
-      {todos.length > 1 && (
-        <button
-          className="container__button delete-all"
-          onClick={() => dispatch(deleteAll())}
-        >
-          DELETE ALL
-        </button>
-      )}
-    </div>
-  );
-};
+    </Route>
+  )
+);
+
+const App = () => <RouterProvider router={router} />;
 
 export default App;

@@ -1,17 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 
-import { addTodo } from "../redux/todosSlice";
-import { updateTodo } from "../redux/todosSlice";
+import { todoAPI } from "../redux/todoAPI";
 
-const Form = ({ editFormVisibility, editTodo, cancelUpdate }) => {
-  const dispatch = useDispatch();
-
+const Form = ({ editTodo, editFormVisibility, cancelUpdate }) => {
   const [todoValue, setTodoValue] = useState("");
   const [editValue, setEditValue] = useState("");
 
   const inputRef = useRef(null);
+
+  const [addTodo, {}] = todoAPI.useAddTodoMutation();
+  const [updateTodo, {}] = todoAPI.useUpdateTodoMutation();
 
   useEffect(() => {
     setEditValue(editTodo.todo);
@@ -21,26 +20,27 @@ const Form = ({ editFormVisibility, editTodo, cancelUpdate }) => {
     inputRef.current.focus();
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     const todoObj = {
       id: uuidv4(),
       todo: todoValue,
       completed: false,
     };
+
+    await addTodo(todoObj).unwrap();
     setTodoValue("");
-    dispatch(addTodo(todoObj));
   };
 
-  const editSubmit = (e) => {
+  const editSubmit = async e => {
     e.preventDefault();
     const editedObj = {
       id: editTodo.id,
       todo: editValue,
       completed: false,
     };
+    (await updateTodo({ ...editedObj }).unwrap()) && cancelUpdate();
     setEditValue("");
-    dispatch(updateTodo(editedObj)) && cancelUpdate();
   };
 
   return (
@@ -54,7 +54,7 @@ const Form = ({ editFormVisibility, editTodo, cancelUpdate }) => {
               placeholder="Add your todo..."
               required
               value={todoValue}
-              onChange={(e) => setTodoValue(e.target.value)}
+              onChange={e => setTodoValue(e.target.value)}
               ref={inputRef}
             />
             <button type="submit" className="form__submit-button">
@@ -71,7 +71,7 @@ const Form = ({ editFormVisibility, editTodo, cancelUpdate }) => {
               className="form__input"
               required
               value={editValue || ""}
-              onChange={(e) => setEditValue(e.target.value)}
+              onChange={e => setEditValue(e.target.value)}
               ref={inputRef}
             />
             <button type="submit" className="form__update-button">

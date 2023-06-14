@@ -1,0 +1,162 @@
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+
+.BackHomeButton {
+  margin: 10px;
+  padding: 15px 30px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  border-radius: 10px;
+  display: block;
+  border: 0px;
+  font-weight: 700;
+  box-shadow: 0px 0px 14px -7px #f09819;
+  background-image: linear-gradient(
+    45deg,
+    #ff512f 0%,
+    #f09819 51%,
+    #ff512f 100%
+  );
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  text-decoration: none;
+}
+
+.BackHomeButton:hover {
+  background-position: right center;
+  color: #fff;
+}
+
+.BackHomeButton:active {
+  transform: scale(0.95);
+}
+
+.blockBackHomeButton {
+  padding: 20px;
+  display: block;
+  position: absolute;
+}
+
+.signInSection {
+  background-image: linear-gradient(to bottom right, #c0b3df, #471153);
+  border: 3px solid black;
+  border-radius: 15px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  margin: 150px;
+  padding: 35px;
+  min-height: 300px;
+  min-width: 300px;
+  height: 500px;
+  width: 500px;
+}
+
+.section__header {
+  font-size: 45px;
+  text-align: center;
+  padding-bottom: 10px;
+  font-weight: 600;
+  color: #fdfdfe;
+  text-shadow: 0px 0px 5px #9051cf, 0px 0px 10px #b393d3, 0px 0px 10px #b393d3,
+    0px 0px 20px #b393d3;
+}
+
+.section__buttonBlock {
+  display: flex;
+  justify-content: center;
+}
+
+.section__buttonLogin {
+  background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
+  border: 0;
+  border-radius: 10px;
+  box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+  box-sizing: border-box;
+  color: #ffffff;
+  font-family: Phantomsans, sans-serif;
+  font-size: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1em;
+  width: 50%;
+  max-width: 100%;
+  min-width: 140px;
+  min-height: 39px;
+  padding: 19px 24px;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.section__buttonLogin:active,
+.section__buttonLogin:hover {
+  outline: 0;
+}
+
+@media (max-width: 768px) {
+  .section__buttonLogin {
+    font-size: 19px;
+    min-width: 196px;
+  }
+}
+
+.section__registrationLink {
+  text-transform: uppercase;
+  background-image: linear-gradient(
+    -225deg,
+    #231557 0%,
+    #44107a 29%,
+    #ff1361 67%,
+    #fff800 100%
+  );
+  background-size: auto auto;
+  background-clip: border-box;
+  background-size: 200% auto;
+  color: #fff;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textclip 3.5s linear infinite;
+  display: block;
+  font-size: 15px;
+  padding-top: 30px;
+  text-align: center;
+}
+@keyframes textclip {
+  to {
+    background-position: 200% center;
+  }
+}
+
+.Success__header {
+  font-family: "Pacifico", cursive;
+  font-size: 50px;
+  padding-top: 250px;
+  animation: bouncing 0.6s ease infinite alternate;
+}
+
+@keyframes bouncing {
+  0% {
+    transform: translateY(0px);
+  }
+  100% {
+    transform: translateY(20px);
+  }
+}
+
+@media (max-width: 435px) {
+  .Success__header {
+    font-size: 35px;
+    padding-top: 300px;
+  }
+}
