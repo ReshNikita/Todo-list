@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const todoAPI = createApi({
   reducerPath: "todoAPI",
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_HEROKU_TODOS,
+    baseUrl: process.env.REACT_APP_HEROKU_URL,
     prepareHeaders: headers => {
       const token = localStorage.getItem("token");
       if (token) {
@@ -16,13 +16,13 @@ export const todoAPI = createApi({
   endpoints: builder => ({
     getTodos: builder.query({
       query: () => ({
-        url: "/todo",
+        url: "/todos",
       }),
       providesTags: result => [{ type: "todos" }],
     }),
     addTodo: builder.mutation({
       query: body => ({
-        url: "/todo",
+        url: "/todos",
         method: "POST",
         body,
       }),
@@ -30,7 +30,7 @@ export const todoAPI = createApi({
     }),
     updateTodo: builder.mutation({
       query: ({ editValue, id }) => ({
-        url: `/todo/${id}`,
+        url: `/todos/${id}`,
         method: "PATCH",
         body: { todo: editValue },
       }),
@@ -38,14 +38,14 @@ export const todoAPI = createApi({
     }),
     removeTodo: builder.mutation({
       query: id => ({
-        url: `/todo/${id}`,
+        url: `/todos/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: [{ type: "todos" }],
     }),
     completedTodo: builder.mutation({
       query: id => ({
-        url: `/todo/${id}/completed`,
+        url: `/todos/${id}/completed`,
         method: "PATCH",
       }),
       invalidatesTags: [{ type: "todos" }],
