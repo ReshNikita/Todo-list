@@ -3,7 +3,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const todoAPI = createApi({
   reducerPath: "todoAPI",
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_TODOS,
+    baseUrl: `${process.env.REACT_APP_BASE}`,
+    //process.env.REACT_APP_TODOS,
     prepareHeaders: headers => {
       const token = localStorage.getItem("token");
       if (token) {

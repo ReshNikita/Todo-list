@@ -41,7 +41,8 @@ const Registration = () => {
   const handleSubmit = async () => {
     try {
       const { status, data } = await axios.post(
-        process.env.REACT_APP_REGISTER,
+        `${process.env.REACT_APP_BASE}/users/register`,
+        //process.env.REACT_APP_REGISTER,
         { username, password, email, gender, age }
       );
       console.log(status, data);
