@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Button, Form, Input, InputNumber, Select } from "antd";
@@ -25,8 +25,7 @@ const Registration = () => {
   ];
 
   const [username, setUserName] = useState("");
-  const [nickname, setNickname] = useState("");
-  const [userEmail, setUserEmail] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [gender, setGender] = useState(genderOptions[0].value);
   const [age, setAge] = useState("");
@@ -35,46 +34,32 @@ const Registration = () => {
   const inputRef = useRef();
   const navigate = useNavigate();
 
-  const handleSubmit = async () => {
-    try {
-      const { status, data } = await axios.post(
-        `${process.env.REACT_APP_BASEURL}/users/register`,
-        { username, password, nickname, userEmail, gender, age }
-      );
-      console.log(status, data);
-    } catch (error) {
-      console.log(error);
-    }
-
-    navigate("/");
-  };
-
   useEffect(() => {
     inputRef.current.focus();
   }, []);
 
+  const handleSubmit = async () => {
+    try {
+      const { status, data } = await axios.post(
+        process.env.REACT_APP_REGISTER,
+        { username, password, email, gender, age }
+      );
+      console.log(status, data);
+      setSuccess(true);
+      setTimeout(() => {
+        navigate("/todo", { replace: true });
+      }, 2500);
+    } catch (error) {
+      alert(error.response.data.message);
+    }
+  };
+
   return (
     <>
       {success ? (
-        <>
-          <h1 className="Success__header">Welcome!</h1>
-          <div className="blockBackHomeButton">
-            <Link
-              className="BackHomeButton"
-              onClick={e => setSuccess(!e)}
-              to="/"
-            >
-              Back Home
-            </Link>
-          </div>
-        </>
+        <h1 className="Success__header">Welcome!</h1>
       ) : (
         <>
-          <div className="blockBackHomeButton">
-            <Link className="BackHomeButton" to="/">
-              Back Home
-            </Link>
-          </div>
           <section className="sectionRegistration">
             <h1 className="registratioHeader">Sign in</h1>
             <Form
@@ -85,17 +70,16 @@ const Registration = () => {
               style={{
                 maxWidth: 600,
               }}
-              autoComplete="off"
+              autoComplete="on"
               initialValues={{
-                nickname,
                 password,
                 gender,
-                user: { username, age, userEmail },
+                user: { username, age, email },
               }}
             >
               <Form.Item
-                name={["user", "username"]}
-                label="Name"
+                name={["Username"]}
+                label="Usermame"
                 rules={[
                   {
                     required: true,
@@ -110,30 +94,11 @@ const Registration = () => {
               </Form.Item>
 
               <Form.Item
-                label="Nickname"
-                name="nickname"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your nickname!",
-                  },
-                ]}
-              >
-                <Input
-                  className="RegistrationInput"
-                  type="text"
-                  value={nickname}
-                  onChange={e => setNickname(e.target.value)}
-                />
-              </Form.Item>
-
-              <Form.Item
                 label="Password"
-                name="password"
+                name="Password"
                 rules={[
                   {
                     required: true,
-                    message: "Please input your password!",
                   },
                 ]}
               >
@@ -144,7 +109,7 @@ const Registration = () => {
               </Form.Item>
 
               <Form.Item
-                name={["user", "userEmail"]}
+                name={["Email"]}
                 label="Email"
                 rules={[
                   {
@@ -153,20 +118,18 @@ const Registration = () => {
                   },
                 ]}
               >
-                <Input
-                  value={userEmail}
-                  onChange={e => setUserEmail(e.target.value)}
-                />
+                <Input value={email} onChange={e => setEmail(e.target.value)} />
               </Form.Item>
 
               <Form.Item
-                name={["user", "age"]}
+                name={["Age"]}
                 label="Age"
                 rules={[
                   {
                     type: "number",
                     min: 0,
                     max: 120,
+                    required: true,
                   },
                 ]}
               >
@@ -174,7 +137,7 @@ const Registration = () => {
               </Form.Item>
 
               <Form.Item
-                name="gender"
+                name="Gender"
                 label="Gender"
                 rules={[
                   {
@@ -185,7 +148,7 @@ const Registration = () => {
                 <Select
                   value={gender}
                   onChange={e => setGender(e)}
-                  placeholder="Select a option and change input text above"
+                  placeholder="Select an option..."
                   allowClear
                 >
                   {genderOptions.map(option => (
@@ -207,6 +170,11 @@ const Registration = () => {
               </div>
             </Form>
           </section>
+          <div className="blockBackHomeButton">
+            <Link className="BackHomeButton" to="/">
+              Back Home
+            </Link>
+          </div>
         </>
       )}
     </>

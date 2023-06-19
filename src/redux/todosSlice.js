@@ -33,31 +33,32 @@ const todosSlice = createSlice({
       );
     },
   },
-  extraReducers: {
-    [getTodos.pending.type]: state => {
-      state.isLoading = true;
-    },
-    [getTodos.fulfilled.type]: (state, action) => {
-      state.isLoading = false;
-      state.tasks = action.payload;
-      state.error = "";
-    },
-    [getTodos.rejected.type]: (state, action) => {
-      state.isLoading = false;
-      state.error = action.payload;
-    },
-    [addAsyncTodo.pending.type]: state => {
-      state.isLoading = true;
-    },
-    [addAsyncTodo.fulfilled.type]: (state, action) => {
-      state.isLoading = false;
-      state.tasks.push({ ...action.payload });
-      state.error = "";
-    },
-    [addAsyncTodo.rejected.type]: (state, action) => {
-      state.isLoading = false;
-      state.error = action.payload;
-    },
+  extraReducers: builder => {
+    builder
+      .addCase(getTodos.pending, state => {
+        state.isLoading = true;
+      })
+      .addCase(getTodos.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.todos = action.payload;
+        state.error = null;
+      })
+      .addCase(getTodos.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(addAsyncTodo.pending, state => {
+        state.isLoading = true;
+      })
+      .addCase(addAsyncTodo.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.todos.push({ ...action.payload });
+        state.error = null;
+      })
+      .addCase(addAsyncTodo.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      });
   },
 });
 

@@ -23,9 +23,9 @@ export const getTodos = createAsyncThunk(
 
 export const addAsyncTodo = createAsyncThunk(
   "todos/fetchAddTodo",
-  async (todo, thunkApi) => {
+  async (title, thunkApi) => {
     try {
-      const response = await instance.post("/todos", todo);
+      const response = await instance.post("/todos", title);
       return response.data;
     } catch (err) {
       return thunkApi.rejectWithValue("Couldn't add a todo");

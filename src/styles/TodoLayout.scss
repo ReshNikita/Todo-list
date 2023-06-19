@@ -1,0 +1,14 @@
+.container {
+  background-color: #96239680;
+  width: auto;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 3px 6px 40px #000;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+@media (max-width: 451px) {
+  .container {
+    margin: 15px;
+  }
+}

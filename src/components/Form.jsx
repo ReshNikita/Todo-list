@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { useState, useEffect, useRef } from "react";
 
-import { todoAPI } from "../redux/todoAPI";
+import { useAddTodoMutation, useUpdateTodoMutation } from "../redux/todoAPI";
+
+import "../styles/Form.scss";
 
 const Form = ({ editTodo, editFormVisibility, cancelUpdate }) => {
   const [todoValue, setTodoValue] = useState("");
@@ -9,11 +10,11 @@ const Form = ({ editTodo, editFormVisibility, cancelUpdate }) => {
 
   const inputRef = useRef(null);
 
-  const [addTodo, {}] = todoAPI.useAddTodoMutation();
-  const [updateTodo, {}] = todoAPI.useUpdateTodoMutation();
+  const [addTodo] = useAddTodoMutation();
+  const [updateTodo] = useUpdateTodoMutation();
 
   useEffect(() => {
-    setEditValue(editTodo.todo);
+    setEditValue(editTodo.title);
   }, [editTodo]);
 
   useEffect(() => {
@@ -22,24 +23,16 @@ const Form = ({ editTodo, editFormVisibility, cancelUpdate }) => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const todoObj = {
-      id: uuidv4(),
-      todo: todoValue,
-      completed: false,
-    };
-
-    await addTodo(todoObj).unwrap();
     setTodoValue("");
+    await addTodo({ title: todoValue });
   };
 
   const editSubmit = async e => {
     e.preventDefault();
-    const editedObj = {
+    (await updateTodo({
+      title: editValue,
       id: editTodo.id,
-      todo: editValue,
-      completed: false,
-    };
-    (await updateTodo({ ...editedObj }).unwrap()) && cancelUpdate();
+    }).unwrap()) && cancelUpdate();
     setEditValue("");
   };
 
@@ -47,7 +40,7 @@ const Form = ({ editTodo, editFormVisibility, cancelUpdate }) => {
     <>
       {editFormVisibility === false ? (
         <form className="form" onSubmit={handleSubmit}>
-          <div className="input-and-btn">
+          <div className="form__box">
             <input
               type="text"
               className="form__input"
@@ -65,7 +58,7 @@ const Form = ({ editTodo, editFormVisibility, cancelUpdate }) => {
       ) : (
         <form className="form" onSubmit={editSubmit}>
           <label className="form__updateItems">Update your todo-items</label>
-          <div className="input-and-btn">
+          <div className="form__box">
             <input
               type="text"
               className="form__input"

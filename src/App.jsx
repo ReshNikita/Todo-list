@@ -1,4 +1,3 @@
-// NEw
 import {
   createBrowserRouter,
   createRoutesFromElements,

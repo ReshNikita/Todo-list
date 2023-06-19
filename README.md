@@ -1,1 +1,1 @@
-# Todo-list: Redux toolkit version
+# Todo-list: Redux toolkit query + API

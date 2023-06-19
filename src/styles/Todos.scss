@@ -1,0 +1,63 @@
+@mixin isCompletedTodo($completed: true) {
+  @if $completed {
+    text-decoration: line-through;
+    text-decoration-color: red;
+  } @else {
+    text-decoration: none;
+  }
+}
+
+.todoBox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+  margin: 10px 0 10px;
+  border: solid 2px #c89666;
+  border-radius: 25px;
+  background-color: #593f3fc8;
+  padding: 7px;
+
+  &__input {
+    cursor: pointer;
+  }
+
+  &__actions-box {
+    padding: 7px 7px 7px 0;
+    cursor: pointer;
+  }
+
+  &__editClickButton {
+    color: #e2d209;
+  }
+
+  &__removeButton {
+    color: lightseagreen;
+  }
+
+  &__completed {
+    @include isCompletedTodo($completed: true);
+  }
+  &__notCompleted {
+    @include isCompletedTodo($completed: false);
+  }
+
+  span {
+    min-width: 250px;
+    background-color: transparent;
+    color: #ccc;
+    font-size: 20px;
+    padding-left: 14px;
+  }
+}
+
+.noTodosYet {
+  color: #fafafaba;
+  font-family: "Alkatra", cursive;
+  font-style: italic;
+  margin-left: 8px;
+  margin-top: 18px;
+  letter-spacing: 3px;
+  text-shadow: 1px 0px 5px #c89666;
+}

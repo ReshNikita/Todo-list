@@ -1,18 +1,17 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState } from "react";
 
 import Header from "./Header/Header";
 import Form from "./Form";
 import Todos from "./Todos";
 import { todoAPI } from "../redux/todoAPI";
-import { deleteAll } from "../redux/todosSlice";
+import LoadingSpinner from "./LoadingSpinner/LoadingSpinner";
+
+import "../styles/TodoLayout.scss";
 
 const TodoLayout = () => {
   const [editFormVisibility, setEditFormVisibility] = useState(false);
   const [editTodo, setEditTodo] = useState("");
-  const dispatch = useDispatch();
-
-  const { data: todos, isSuccess, error } = todoAPI.useGetTodosQuery("");
+  const { isLoading } = todoAPI.useGetTodosQuery("");
 
   const handleEditClick = todo => {
     setEditFormVisibility(true);
@@ -35,14 +34,7 @@ const TodoLayout = () => {
         handleEditClick={handleEditClick}
         editFormVisibility={editFormVisibility}
       />
-      {/* {todos.length > 1 && (
-        <button
-          className="container__button delete-all"
-          onClick={() => dispatch(deleteAll())}
-        >
-          DELETE ALL
-        </button>
-      )} */}
+      {isLoading && <LoadingSpinner />}
     </div>
   );
 };
