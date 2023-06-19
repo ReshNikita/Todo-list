@@ -19,14 +19,10 @@ const Login = () => {
 
   const handleSubmit = async e => {
     try {
-      const { status, data } = await axios.post(
-        `${process.env.REACT_APP_BASE}/auth/login`,
-        // process.env.REACT_APP_URL
-        {
-          email,
-          password,
-        }
-      );
+      const { status, data } = await axios.post(process.env.REACT_APP_URL, {
+        email,
+        password,
+      });
 
       console.log(status);
       setSuccess(true);
