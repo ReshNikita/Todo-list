@@ -5,11 +5,13 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-import ErrorPage from "./components/ErrorPage";
-import Login from "./components/Login/Login";
-import Registration from "./components/Registration/Registration";
-import PrivateRoute from "./components/PrivateRoute";
-import TodoLayout from "./components/TodoLayout";
+import {
+  ErrorPage,
+  Login,
+  Registration,
+  PrivateRoute,
+  TodoLayout,
+} from "./components/";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
