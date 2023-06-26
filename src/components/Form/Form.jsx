@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 
-import { useAddTodoMutation, useUpdateTodoMutation } from "../redux/todoAPI";
+import { useAddTodoMutation, useUpdateTodoMutation } from "../../redux/todoAPI";
 
-import "../styles/Form.scss";
+import "./Form.scss";
 
 const Form = ({ editTodo, editFormVisibility, cancelUpdate }) => {
   const [todoValue, setTodoValue] = useState("");

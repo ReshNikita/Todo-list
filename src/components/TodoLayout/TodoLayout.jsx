@@ -1,12 +1,12 @@
 import { useState } from "react";
 
-import Header from "./Header/Header";
-import Form from "./Form";
-import Todos from "./Todos";
-import { todoAPI } from "../redux/todoAPI";
-import LoadingSpinner from "./LoadingSpinner/LoadingSpinner";
+import Header from "../Header/Header";
+import Todos from "../Todos/Todos";
+import Form from "../Form/Form";
+import { todoAPI } from "../../redux/todoAPI";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
-import "../styles/TodoLayout.scss";
+import "./TodoLayout.scss";
 
 const TodoLayout = () => {
   const [editFormVisibility, setEditFormVisibility] = useState(false);

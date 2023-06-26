@@ -5,9 +5,9 @@ import {
   useCompletedTodoMutation,
   useRemoveTodoMutation,
   useGetTodosQuery,
-} from "../redux/todoAPI";
+} from "../../redux/todoAPI";
 
-import "../styles/Todos.scss";
+import "./Todos.scss";
 
 const Todos = ({ handleEditClick, editFormVisibility }) => {
   const { data: todos, isSuccess, error } = useGetTodosQuery("");
@@ -51,7 +51,7 @@ const Todos = ({ handleEditClick, editFormVisibility }) => {
               </span>
             </div>
             <div className="todoBox__actions-box">
-              {editFormVisibility === false && (
+              {!editFormVisibility && (
                 <>
                   <span onClick={() => handleEditClick(todo)}>
                     <FontAwesomeIcon
